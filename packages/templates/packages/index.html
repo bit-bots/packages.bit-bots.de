@@ -1,0 +1,8 @@
+{% extends 'packages/base.html' %}
+{% block bodyblock %}
+    <ul>
+    {% for package in packages %}
+        <li>{{ package.name }} ({{ package.version }})</li>
+    {% endfor %}
+    </ul>
+{% endblock bodyblock %}
