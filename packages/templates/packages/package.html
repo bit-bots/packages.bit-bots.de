@@ -1,0 +1,11 @@
+{% extends 'packages/base.html' %}
+{% block bodyblock %}
+    <h1>Details for package {{ package.name }}</h1>
+    {% if package.local_state == 0 %}<p>This package is currently being built</p>
+    {% elif package.local_state == 1 %}<p>This package is queued for building</p>{% endif %}
+    <p>{% if package.upstream_state == 0 %}This package can be updated, the current version is {{ package.version }}
+    {% elif package.upstream_state == 1 %}This package is up to date, the current version is {{ package.version }}
+    {% else %}This package is currently not built for python 3. <a href="#">Request build</a>{% endif %}</p>
+
+    <p>The local state is {{ package.get_local_state_display }}.</p>
+{% endblock bodyblock %}

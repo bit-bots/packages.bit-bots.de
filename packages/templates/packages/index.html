@@ -1,8 +1,17 @@
 {% extends 'packages/base.html' %}
 {% block bodyblock %}
-    <ul>
-    {% for package in packages %}
-        <li>{{ package.name }} ({{ package.version }})</li>
-    {% endfor %}
-    </ul>
+    <p>All packages have been build for Python 3.
+        Add the packages to your Ubuntu 18.04 by executing <span class="code">sudo sh -c 'echo "deb http://packages.bit-bots.de bionic main" > /etc/apt/sources.list.d/ros.list"'</span>.
+        Remember to remove previous ROS package repositories from your apt lists and run <span class="code">sudo apt update.</span>
+    </p>
+    <table id="packages">
+        <tr><th>Package Name</th><th>Package Version</th><th>Package State</th></tr>
+        {% for package in packages %}
+            <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
+                <td><a href="{% url 'package' package.id %}">{{ package.name }}</a></td>
+                <td>{{ package.version }}</td>
+                <td>{{ package.get_upstream_state_display }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock bodyblock %}

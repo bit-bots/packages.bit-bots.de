@@ -1,0 +1,45 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    font-size: larger;
+    background-color: #e4e4e4;
+    padding: 12px;
+    text-align: center;
+}
+
+#body {
+    width: 75%;
+    margin: auto;
+}
+
+.code {
+    font-family: monospace;
+}
+
+#packages {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.package > td, th {
+    padding: 8px 14px;
+    text-align: left;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+}
+
+.upstream-state-0 {
+    background-color: #FFEB3B;
+}
+
+.upstream-state-1 {
+    background-color: #8BC34A;
+}
+
+.upstream-state-2 {
+    background-color: #BDBDBD;
+}

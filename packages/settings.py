@@ -121,7 +121,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, '_static/')
 STATIC_URL = '/static/'
 
-OWN_URL = 'http://packages.bit-bots.de/'
+LOCAL_URL = 'http://packages.bit-bots.de/'
 UPSTREAM_URL = 'http://packages.ros.org/ros/ubuntu/'
