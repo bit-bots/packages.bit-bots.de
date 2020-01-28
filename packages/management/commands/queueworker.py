@@ -68,6 +68,7 @@ class Command(BaseCommand):
                         break
                     # Deploy was successful, reset package state and update version
                     package.local_state = LocalState.UP_TO_DATE
+                    package.upstream_state = UpstreamState.UP_TO_DATE
                     package.version = parse_release_file(settings.LOCAL_URL)[package.name]
                     package.save()
                     queue.remove(package.id)
