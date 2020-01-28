@@ -45,12 +45,12 @@ class Command(BaseCommand):
                         this_package_can_be_built = False
                 if this_package_can_be_built:
                     # No dependencies, we can build
+                    package.local_state = LocalState.IN_PROGRESS
+                    package.save()
                     package_path = packaging_interface.build_package(package.name)
                     if not os.path.exists(package_path):
                         print(f'Error building {package.name}')
                         break
-                    package.local_state = LocalState.IN_PROGRESS
-                    package.save()
                     # Sign package
                     success = packaging_interface.sign_package(package_path)
                     if not success:
