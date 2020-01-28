@@ -1,4 +1,5 @@
 import os
+from time import sleep
 
 import fasteners
 from django.conf import settings
@@ -21,6 +22,10 @@ class Command(BaseCommand):
             while True:
                 if not queue:
                     queue = list(Package.objects.filter(local_state=LocalState.QUEUED).values_list('id', flat=True))
+                if not queue:
+                    # Still no queue? Sleep.
+                    sleep(30)
+                    continue
                 # Get first in queue
                 package = Package.objects.get(queue[0])
                 # Get dependencies
