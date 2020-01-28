@@ -7,6 +7,7 @@ from django.core.management import BaseCommand, CommandError
 
 from packages import packaging_interface
 from packages.models import Package, LocalState, UpstreamState
+from packages.parse_release import parse_release_file
 
 
 class Command(BaseCommand):
@@ -64,8 +65,9 @@ class Command(BaseCommand):
                         package.local_state = LocalState.QUEUED
                         package.save()
                         break
-                    # Deploy was successful, reset package state
+                    # Deploy was successful, reset package state and update version
                     package.local_state = LocalState.UP_TO_DATE
+                    package.version = parse_release_file[settings.LOCAL_URL][package.name]
                     package.save()
                     queue.remove(package.id)
         else:

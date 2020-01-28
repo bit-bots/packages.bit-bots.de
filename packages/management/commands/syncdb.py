@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.management import BaseCommand
 from django.db.models import ObjectDoesNotExist
 
-from packages.models import Package, UpstreamState
+from packages.models import Package, UpstreamState, LocalState
 from packages.parse_release import parse_release_file
 
 
@@ -22,8 +22,10 @@ class Command(BaseCommand):
                 local_version = packages[package_name]
                 if upstream_version == local_version:
                     package.upstream_state = UpstreamState.UP_TO_DATE
+                    package.local_state = LocalState.UP_TO_DATE
                 elif upstream_version > local_version:
                     package.upstream_state = UpstreamState.UPDATE_AVAILABLE
+                    package.local_state = LocalState.QUEUED
                     package.version = packages[package_name]
                 else:
                     print(f'Error: Package {package_name} newer than upstream')
