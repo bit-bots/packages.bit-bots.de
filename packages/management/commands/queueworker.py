@@ -27,7 +27,7 @@ class Command(BaseCommand):
                     sleep(30)
                     continue
                 # Get first in queue
-                package = Package.objects.get(queue[0])
+                package = Package.objects.get(id=queue[0])
                 # Get dependencies
                 dependencies = packaging_interface.get_dependencies(package.name)
                 this_package_can_be_built = True
@@ -38,7 +38,8 @@ class Command(BaseCommand):
                         # Remove from list and insert in front
                         dep_package.local_state = LocalState.QUEUED
                         dep_package.save()
-                        queue.remove(dep_package.id)
+                        if dep_package.id in queue:
+                            queue.remove(dep_package.id)
                         queue.insert(0, dep_package.id)
                         this_package_can_be_built = False
                 if this_package_can_be_built:
