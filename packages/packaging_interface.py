@@ -24,6 +24,7 @@ def build_package(package: str) -> str:
     cmd = [
         "podman",
         "run",
+        "--rm",
         "-v",
         f"{settings.OUTPUT_DIR}:/out",
         "packages-base",

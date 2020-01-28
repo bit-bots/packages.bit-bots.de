@@ -18,6 +18,7 @@ class Command(BaseCommand):
         gotten = lock.acquire(blocking=False)
         if Package.objects.filter(local_state=LocalState.IN_PROGRESS):
             print('There are still packages in progress. This should never happen.')
+            return
         if gotten:
             queue = []
             while True:
@@ -67,7 +68,7 @@ class Command(BaseCommand):
                         break
                     # Deploy was successful, reset package state and update version
                     package.local_state = LocalState.UP_TO_DATE
-                    package.version = parse_release_file[settings.LOCAL_URL][package.name]
+                    package.version = parse_release_file(settings.LOCAL_URL)[package.name]
                     package.save()
                     queue.remove(package.id)
         else:
