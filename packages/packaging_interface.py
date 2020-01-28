@@ -30,7 +30,7 @@ def build_package(package: str) -> str:
         "./build_package",
         package,
     ]
-    file_name = subprocess.check_output(cmd)
+    file_name = subprocess.check_output(cmd).decode().strip()
     file_path = os.path.join(settings.OUTPUT_DIR, file_name)
     return file_path
 

@@ -19,5 +19,4 @@ def request(request: HttpRequest, package_id: int) -> HttpResponse:
     package = get_object_or_404(Package, id=package_id)
     package.local_state = LocalState.QUEUED
     package.save()
-    print(package)
     return redirect(urls.reverse('package', args=(package_id,)))
