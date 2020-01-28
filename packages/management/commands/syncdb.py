@@ -24,7 +24,7 @@ class Command(BaseCommand):
                     package.upstream_state = UpstreamState.UP_TO_DATE
                 elif upstream_version > local_version:
                     package.upstream_state = UpstreamState.UPDATE_AVAILABLE
-                    package.version = packages[version]
+                    package.version = packages[local_version]
                 else:
                     print(f'Error: Package {package_name} newer than upstream')
                     package.upstream_state = UpstreamState.UNKNOWN
