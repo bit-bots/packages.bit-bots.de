@@ -76,11 +76,8 @@ WSGI_APPLICATION = 'packages.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'packages',
-        'USER': 'packages',
-        'PASSWORD': 'packages',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
