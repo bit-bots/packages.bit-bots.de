@@ -1,2 +1,3 @@
 _static
 db.sqlite3
+*.deb
