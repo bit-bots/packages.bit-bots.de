@@ -71,4 +71,4 @@ class Command(BaseCommand):
             raise CommandError(
                 'The lockfile is present. There seems to be another instance of the queue worker running.\n'
                 'Please stop it before starting a new one.\n'
-                'If this problem persists, delete {}.\n'.format(lock.path))
+                f'If this problem persists, delete {lock.path.decode()}.\n')
