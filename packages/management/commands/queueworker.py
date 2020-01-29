@@ -76,6 +76,7 @@ class Command(BaseCommand):
                     package.version = parse_release_file(settings.LOCAL_URL)[package.name]
                     package.save()
                     queue.remove(package.id)
+                    print(f'Successfully deployed package {package.name}')
         else:
             raise CommandError(
                 'The lockfile is present. There seems to be another instance of the queue worker running.\n'
