@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Update package lists
+apt update -qqq
+
+# Get run dependencies
+apt-cache depends --recurse --no-recommends --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances $1 | grep "^\w" > run_depends
+
+# Get build dependencies
+apt-rdepends --build $1 2>/dev/null | grep "^\w" > build_depends
+
+# Merge lists, use python3 except for wxtools
+sort -u run_depends build_depends | sed "s/python-/python3-/" | sed "s/python3-wxtools/python-wxtools/" | sort -u > depends
+
+# Get ROS packages
+wget -q http://packages.ros.org/ros/ubuntu/dists/bionic/main/binary-amd64/Packages -O- | grep -Po "(?<=^Package: ).*$" | grep "^\(ros-melodic-\|python3-\)" | sort -u > ros_packages
+
+# Get dependencies that are from ROS
+comm -12 depends ros_packages

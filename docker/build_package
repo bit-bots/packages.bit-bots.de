@@ -1,0 +1,45 @@
+#!/bin/bash
+
+export DEBIAN_FRONTEND=noninteractive
+
+apt update -qqq
+
+# Download package and save folder name
+FOLDER=$(apt-get source $1 | grep extracting | awk '{print $6}')
+
+# Now we can use the Bit-Bots package repository
+echo "deb http://packages.bit-bots.de bionic main" > /etc/apt/sources.list.d/ros-latest.list
+apt update -qqq
+
+# Go to directory
+cd $FOLDER
+
+# Replace for python3 in build files
+sed -i "/^Depends:/s/ python-/ python3-/g" debian/control
+sed -i "/^Build-Depends:/s/ python-/ python3-/g" debian/control
+sed -i "s/python3-wxtools/python-wxtools/" debian/control  # wxtools only exists as python-wxtools
+sed -i "s/\bdh_auto_configure --/& -DPYTHON_VERSION=3/" debian/rules  # add -DPYTHON_VERSION=3 for cmake
+sed -i "s/quilt/native/" debian/source/format  # We need native build because we do not have incremental updates
+rm -f debian/source/options  # Remove options (auto-commit is not working with native)
+
+# Replace for python3 in source files
+py_files=$(grep -rl 'env python *$')
+[ -n "$py_files" ] && sed -i "s,env python *$,env python3,g" $py_files
+py_files=$(grep -rl 'bin/python *$')
+[ -n "$py_files" ] && sed -i "s,/usr/bin/python *$,/usr/bin/env python3,g" $py_files
+
+# Eigenpy sucks
+[[ $FOLDER =~ ros-melodic-eigenpy-[\d-]* ]] && sed -i 's/FINDPYTHON()/FINDPYTHON(${PYTHON_VERSION} REQUIRED)/' CMakeLists.txt
+
+# Install build dependencies
+mk-build-deps --install --remove --tool='apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes' debian/control &>/dev/null || exit 1
+
+# Build package
+debuild -us -uc -b &>/dev/null || exit 1
+
+# Copy built package to /out
+cd ..
+FILENAME=$(ls $(sed 's/\(.*\)-/\1_/' <<< $FOLDER)-*.deb)
+cp $FILENAME /out
+
+echo $FILENAME
