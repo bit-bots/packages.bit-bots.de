@@ -41,5 +41,6 @@ debuild -us -uc -b &>/dev/null || exit 1
 cd ..
 FILENAME=$(ls $(sed 's/\(.*\)-/\1_/' <<< $FOLDER)-*.deb)
 cp $FILENAME /out
+chown 1001:65534 /out/$FILENAME
 
 echo $FILENAME
