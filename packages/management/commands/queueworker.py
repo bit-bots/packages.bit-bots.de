@@ -16,9 +16,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         lock = fasteners.InterProcessLock(os.path.join(settings.OUTPUT_DIR, 'worker.lock'))
         gotten = lock.acquire(blocking=False)
-        if Package.objects.filter(local_state=LocalState.IN_PROGRESS):
-            print('There are still packages in progress. This should never happen.')
-            return
+        in_progress = Package.objects.filter(local_state=LocalState.IN_PROGRESS)
+        if in_progress:
+            print('Some packages are still in progress. Resetting them to queued.')
+            in_progress.update(local_state=LocalState.QUEUED)
         if gotten:
             queue = []
             while True:
