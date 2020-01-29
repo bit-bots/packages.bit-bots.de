@@ -1,3 +1,5 @@
 _static
 db.sqlite3
 *.deb
+worker.lock
+__pycache__
