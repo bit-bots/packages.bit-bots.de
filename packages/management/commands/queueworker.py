@@ -30,6 +30,7 @@ class Command(BaseCommand):
                     continue
                 # Get first in queue
                 package = Package.objects.get(id=queue[0])
+                print(f'Handling package {package.name}')
                 # Get dependencies
                 dependencies = packaging_interface.get_dependencies(package.name)
                 this_package_can_be_built = True
@@ -42,10 +43,12 @@ class Command(BaseCommand):
                         dep_package.save()
                         if dep_package.id in queue:
                             queue.remove(dep_package.id)
+                        print(f'Adding dependency {dep_package.name}')
                         queue.insert(0, dep_package.id)
                         this_package_can_be_built = False
                 if this_package_can_be_built:
                     # No dependencies, we can build
+                    print(f'Building package {package.name}')
                     package.local_state = LocalState.IN_PROGRESS
                     package.save()
                     package_path = packaging_interface.build_package(package.name)
