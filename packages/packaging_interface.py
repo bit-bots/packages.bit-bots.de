@@ -7,7 +7,7 @@ from django.conf import settings
 
 def get_dependencies(package: str) -> List[str]:
     cmd = [
-        "podman",
+        "docker",
         "run",
         "--rm",
         "-a",
@@ -22,7 +22,7 @@ def get_dependencies(package: str) -> List[str]:
 
 def build_package(package: str) -> str:
     cmd = [
-        "podman",
+        "docker",
         "run",
         "--rm",
         "-v",
