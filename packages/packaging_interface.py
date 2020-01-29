@@ -43,9 +43,10 @@ def sign_package(file_path: str) -> bool:
         "builder",
         file_path,
     ]
-    exit_code = subprocess.call(cmd)
-    if exit_code != 0:
+    p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    if p.returncode != 0:
         print(f'Error signing package {file_path}!')
+        print(p.stdout)
         return False
     return True
 
@@ -59,8 +60,9 @@ def deploy_package(file_path: str) -> bool:
         "bionic",
         file_path,
     ]
-    exit_code = subprocess.call(cmd)
-    if exit_code != 0:
+    p = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    if p.returncode != 0:
         print(f'Error deploying package {file_path}')
+        print(p.stdout)
         return False
     return True
