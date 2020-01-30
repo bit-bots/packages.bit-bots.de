@@ -121,8 +121,12 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, '_static/')
 STATIC_URL = '/static/'
 
+# URL where this server is deployed (used by the syncdb command)
 LOCAL_URL = 'http://packages.bit-bots.de/'
+# URL where the upstream (original) ROS packages are
 UPSTREAM_URL = 'http://packages.ros.org/ros/ubuntu/'
 
+# (temporary) output directory for built packages
 OUTPUT_DIR = os.path.join(BASE_DIR, 'out')
+# root directory of the package repository
 DEPLOY_DIR = '/var/www/packages/'
