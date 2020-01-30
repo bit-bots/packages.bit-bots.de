@@ -18,6 +18,7 @@ cd $FOLDER
 sed -i "/^Depends:/s/ python-/ python3-/g" debian/control
 sed -i "/^Build-Depends:/s/ python-/ python3-/g" debian/control
 sed -i "s/python3-wxtools/python-wxtools/" debian/control  # wxtools only exists as python-wxtools
+sed -i "s/python3-epydoc/python-epydoc/" debian/control  # epydoc as well :(
 sed -i "s/\bdh_auto_configure --/& -DPYTHON_VERSION=3/" debian/rules  # add -DPYTHON_VERSION=3 for cmake
 sed -i "s/quilt/native/" debian/source/format  # We need native build because we do not have incremental updates
 rm -f debian/source/options  # Remove options (auto-commit is not working with native)
