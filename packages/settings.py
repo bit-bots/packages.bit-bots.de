@@ -125,3 +125,4 @@ LOCAL_URL = 'http://packages.bit-bots.de/'
 UPSTREAM_URL = 'http://packages.ros.org/ros/ubuntu/'
 
 OUTPUT_DIR = os.path.join(BASE_DIR, 'out')
+DEPLOY_DIR = '/var/www/packages/'

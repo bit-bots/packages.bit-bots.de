@@ -55,7 +55,7 @@ def deploy_package(file_path: str) -> bool:
     cmd = [
         "reprepro",
         "-b",
-        "/var/www/packages/",
+        settings.DEPLOY_DIR,
         "includedeb",
         "bionic",
         file_path,
