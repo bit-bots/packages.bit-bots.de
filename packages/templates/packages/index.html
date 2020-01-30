@@ -12,7 +12,7 @@
         <tr><th>Package Name</th><th>Package Version</th><th>Package State</th></tr>
         {% for package in packages %}
             <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
-                <td><a href="{% url 'package' package.id %}">{{ package.name }}</a></td>
+                <td><a href="{% url 'package' package.name %}">{{ package.name }}</a></td>
                 <td>{{ package.version }}</td>
                 <td>{{ package.get_upstream_state_display }}</td>
             </tr>

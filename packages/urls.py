@@ -20,7 +20,7 @@ from packages import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    re_path(r'package/(\d+)/request', views.request, name='request'),
-    re_path(r'package/(\d+)', views.package, name='package'),
+    re_path(r'package/([a-z0-9-]+)/request', views.request, name='request'),
+    re_path(r'package/([a-z0-9-]+)', views.package, name='package'),
     path('admin/', admin.site.urls),
 ]
