@@ -2,7 +2,7 @@ import requests
 
 
 def get_release_file(base_url: str) -> str:
-    r = requests.get(base_url + 'dists/bionic/main/binary-amd64/Packages')
+    r = requests.get(base_url + '/dists/bionic/main/binary-amd64/Packages')
     return r.text
 
 

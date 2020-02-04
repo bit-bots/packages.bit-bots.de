@@ -124,7 +124,7 @@ STATIC_URL = '/static/'
 # URL where this server is deployed
 LOCAL_URL = 'http://packages.bit-bots.de'
 # URL where the upstream (original) ROS packages are
-UPSTREAM_URL = 'http://packages.ros.org/ros/ubuntu/'
+UPSTREAM_URL = 'http://packages.ros.org/ros/ubuntu'
 
 # (temporary) output directory for built packages
 OUTPUT_DIR = os.path.join(BASE_DIR, 'out')
