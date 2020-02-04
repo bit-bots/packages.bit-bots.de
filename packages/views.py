@@ -8,6 +8,8 @@ from packages.models import Package, LocalState
 
 def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'packages/index.html', {
+        'progress': Package.objects.filter(local_state=LocalState.IN_PROGRESS),
+        'queue': Package.objects.filter(local_state=LocalState.QUEUED),
         'packages': Package.objects.order_by('upstream_state', 'name'),
         'LOCAL_URL': settings.LOCAL_URL
     })

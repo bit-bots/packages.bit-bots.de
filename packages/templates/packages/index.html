@@ -8,6 +8,27 @@
         </ul>
         Remember to remove previous ROS package repositories from your apt lists, to remove all previously installed ROS Packages (<span class="code">sudo apt remove ros-melodic-*</span>) and run <span class="code">sudo apt update.</span>
     </p>
+    {% if in_progress.exists or queue.exists %}
+    <h4>In progress</h4>
+    <table id="packages">
+        <tr><th>Package Name</th><th>Package Version</th><th>Package State</th></tr>
+        {% for package in in_progress %}
+            <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
+                <td><a href="{% url 'package' package.name %}">{{ package.name }}</a></td>
+                <td>{{ package.version }}</td>
+                <td>{{ package.get_upstream_state_display }}</td>
+            </tr>
+        {% endfor %}
+        {% for package in queue %}
+            <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
+                <td><a href="{% url 'package' package.name %}">{{ package.name }}</a></td>
+                <td>{{ package.version }}</td>
+                <td>{{ package.get_upstream_state_display }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    <h4>All packages</h4>
     <table id="packages">
         <tr><th>Package Name</th><th>Package Version</th><th>Package State</th></tr>
         {% for package in packages %}
