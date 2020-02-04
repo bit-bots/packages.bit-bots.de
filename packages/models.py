@@ -20,6 +20,13 @@ class Package(models.Model):
     upstream_state = models.IntegerField(choices=UpstreamState.choices, default=UpstreamState.UNKNOWN)
     local_state = models.IntegerField(choices=LocalState.choices, default=LocalState.UP_TO_DATE)
 
+    @property
+    def wiki_url(self):
+        if self.name.startswith('ros-melodic-'):
+            return 'https://wiki.ros.org/' + self.name.replace('ros-melodic-', '').replace('-', '_')
+        else:
+            return None
+
 
 class Dependency(models.Model):
     class Meta:
