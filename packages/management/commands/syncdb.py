@@ -17,8 +17,11 @@ class Command(BaseCommand):
         to_create = []
         for package_name in upstream_packages:
             if package_name in local_packages.keys():
+                if local_packages[package_name].upstream_state == UpstreamState.ONLY_UPSTREAM:
+                    # Skip package that is only upstream
+                    continue
                 # Package in local packages -> Check for upstream version
-                if upstream_packages[package_name] == local_packages[package_name].version:
+                elif upstream_packages[package_name] == local_packages[package_name].version:
                     local_packages[package_name].upstream_state = UpstreamState.UP_TO_DATE
                 elif upstream_packages[package_name] <= local_packages[package_name].version:
                     print(f'Package {package_name} newer than upstream package')
@@ -31,5 +34,6 @@ class Command(BaseCommand):
                 # Package not in local packages -> Add
                 to_create.append(Package(name=package_name, version=upstream_packages[package_name],
                                          upstream_state=UpstreamState.ONLY_UPSTREAM))
+                print(f'Added package {package_name}')
         Package.objects.bulk_create(to_create)
         Package.objects.bulk_update(local_packages.values(), ['local_state', 'upstream_state'])
