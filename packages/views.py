@@ -1,4 +1,5 @@
 from django import urls
+from django.conf import settings
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.response import TemplateResponse
@@ -7,7 +8,10 @@ from packages.models import Package, LocalState
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    return render(request, 'packages/index.html', {'packages': Package.objects.order_by('upstream_state', 'name')})
+    return render(request, 'packages/index.html', {
+        'packages': Package.objects.order_by('upstream_state', 'name'),
+        'LOCAL_URL': settings.LOCAL_URL
+    })
 
 
 def package(request: HttpRequest, package_name: str) -> HttpResponse:
