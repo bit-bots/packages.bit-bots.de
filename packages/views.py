@@ -2,7 +2,6 @@ from django import urls
 from django.conf import settings
 from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render, get_object_or_404, redirect
-from django.template.response import TemplateResponse
 
 from packages.models import Package, LocalState
 
