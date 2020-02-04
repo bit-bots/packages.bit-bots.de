@@ -31,6 +31,8 @@ py_files=$(grep -rl 'bin/python *$')
 
 # Eigenpy sucks
 [[ $FOLDER =~ ros-melodic-eigenpy-[\d-]* ]] && sed -i 's/FINDPYTHON()/FINDPYTHON(${PYTHON_VERSION} REQUIRED)/' CMakeLists.txt
+# rViz plugin needs this package but it is not specified as build dep
+[[ $FOLDER =~ ros-melodic-rviz-imu-plugin-[\d-]* ]] && sed -i '/^Build-Depends:/s/$/, libqt5opengl5-dev/' debian/control
 
 # Install build dependencies
 mk-build-deps --install --remove --tool='apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes' debian/control &>/dev/null || exit 1
