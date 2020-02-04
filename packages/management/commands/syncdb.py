@@ -26,6 +26,7 @@ class Command(BaseCommand):
                     # Update available, put into queue
                     local_packages[package_name].upstream_state = UpstreamState.UPDATE_AVAILABLE
                     local_packages[package_name].local_state = LocalState.QUEUED
+                    print(f'Queued package {package_name} for update')
             else:
                 # Package not in local packages -> Add
                 to_create.append(Package(name=package_name, version=upstream_packages[package_name],
