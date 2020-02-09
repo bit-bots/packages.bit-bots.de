@@ -4,6 +4,24 @@ export DEBIAN_FRONTEND=noninteractive
 
 apt update -qqq
 
+if [[ "$1" =~ python3-* ]]; then
+	# starts with python3-, might not have to be built
+	if apt-cache pkgnames | grep -q "$1"; then
+		# this package exists already, does not have to be built, redistribute only
+		apt-get -qqq download $1
+
+		# Copy built package to /out
+		FILENAME=$(ls *.deb)
+		cp $FILENAME /out
+		chown 1001:65534 /out/$FILENAME
+		echo $FILENAME
+		exit 0
+	else
+		echo "Package $1 is not available" >&2
+		exit 1
+	fi
+fi
+
 # Download package and save folder name
 FOLDER=$(apt-get source $1 | grep extracting | awk '{print $6}')
 
