@@ -65,6 +65,8 @@ def deploy_package(file_path: str) -> bool:
         print(f'Error deploying package {file_path}')
         print(p.stdout)
         return False
+    # We can remove the .deb file from the output directory
+    os.remove(file_path)
     return True
 
 
