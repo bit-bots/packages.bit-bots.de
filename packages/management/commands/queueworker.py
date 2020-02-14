@@ -63,6 +63,8 @@ class Command(BaseCommand):
                         package.local_state = LocalState.QUEUED
                         package.save()
                         break
+                    # Remove old version (if existing) before deploying the new one
+                    packaging_interface.remove_package(package.name)
                     # Deploy package
                     success = packaging_interface.deploy_package(package_path)
                     if not success:

@@ -66,3 +66,15 @@ def deploy_package(file_path: str) -> bool:
         print(p.stdout)
         return False
     return True
+
+
+def remove_package(package: str):
+    cmd = [
+        "reprepro",
+        "-b",
+        settings.DEPLOY_DIR,
+        "remove",
+        "bionic",
+        package,
+    ]
+    subprocess.run(cmd)
