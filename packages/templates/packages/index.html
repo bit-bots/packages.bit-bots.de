@@ -1,42 +1,162 @@
 {% extends 'packages/base.html' %}
 {% block bodyblock %}
-    <p>All packages have been built for Python 3.
-        Add the packages to your Ubuntu 18.04 by executing
-        <ul>
-            <li><span class="code">sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4C4EDF893374591687621C75C2F8DBB6A37B2874</span> to add the Bit-Bots signing key</li>
-            <li><span class="code">sudo sh -c 'echo "deb {{ LOCAL_URL }} bionic main" &gt; /etc/apt/sources.list.d/ros.list'</span> to add the package repository</li>
-        </ul>
-        Remember to remove previous ROS package repositories from your apt lists, to remove all previously installed ROS Packages (<span class="code">sudo apt remove ros-melodic-*</span>) and run <span class="code">sudo apt update.</span>
-    </p>
-    {% if progress.exists or queue.exists %}
-    <h4>In progress</h4>
-    <table id="packages">
-        <tr><th>Package Name</th><th>Package Version</th><th>Package State</th></tr>
-        {% for package in progress %}
-            <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
-                <td><a href="{% url 'package' package.name %}">{{ package.name }}</a></td>
-                <td>{{ package.version }}</td>
-                <td>{{ package.get_upstream_state_display }}</td>
-            </tr>
-        {% endfor %}
-        {% for package in queue %}
-            <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
-                <td><a href="{% url 'package' package.name %}">{{ package.name }}</a></td>
-                <td>{{ package.version }}</td>
-                <td>{{ package.get_upstream_state_display }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-    {% endif %}
-    <h4>All packages</h4>
-    <table id="packages">
-        <tr><th>Package Name</th><th>Package Version</th><th>Package State</th></tr>
-        {% for package in packages %}
-            <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
-                <td><a href="{% url 'package' package.name %}">{{ package.name }}</a></td>
-                <td>{{ package.version }}</td>
-                <td>{{ package.get_upstream_state_display }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div class="card my-3">
+        <div class="card-header">Getting started</div>
+        <div class="card-body">
+            <p class="card-text">All packages have been built for Python 3.</p>
+            <p class="card-text">
+                Add the packages to your Ubuntu 18.04 by executing the following commands:
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        To add the Bit-Bots signing key:
+                        <pre><code>sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4C4EDF893374591687621C75C2F8DBB6A37B2874</code></pre>
+                    </li>
+                    <li class="list-group-item">
+                        To add the package repository:
+                        <pre><code>sudo sh -c 'echo "deb {{ LOCAL_URL }} bionic main" &gt; /etc/apt/sources.list.d/ros.list'</code></pre>
+                    </li>
+                </ul>
+            </p>
+            <p class="card-text">
+                Remember to remove previous ROS package repositories from your apt lists.
+                To remove all previously installed ROS Packages run '<code>sudo apt remove ros-melodic-*</code>' and '<code class="code">sudo apt update</code>'.
+            </p>
+        </div>
+    </div>
+
+<div class="accordion my-3" id="accordion-packages">
+    <div class="card">
+        <div class="card-header" id="heading-in-progress">
+            <h5 class="mb-0">
+                {% if progress.exists %}
+                <button class="btn btn-link collapsable" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="true" aria-controls="collapse-in-progress">
+                {% else %}
+                <button class="btn btn-link collapsable collapsed" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="false" aria-controls="collapse-in-progress">
+                {% endif %}
+                    In progress
+                </button>
+            </h5>
+        </div>
+        {% if progress.exists %}
+        <div id="collapse-in-progress" class="collapse show" aria-labelledby="heading-in-progress" data-parent="#accordion-packages">
+        {% else %}
+        <div id="collapse-in-progress" class="collapse" aria-labelledby="heading-in-progress" data-parent="#accordion-packages">
+        {% endif %}
+            <div class="card-body">
+            {% if progress.exists %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Package Name</th>
+                        <th>Package Version</th>
+                        <th>Package State</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for package in progress %}
+                    <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
+                        <th scope="row"><a href="{% url 'package' package.name %}">{{ package.name }}</a></th>
+                        <td>{{ package.version }}</td>
+                        <td>{{ package.get_upstream_state_display }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div>
+                Currently no package build is in progress.
+            </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="heading-queued">
+            <h5 class="mb-0">
+                {% if queue.exists %}
+                <button class="btn btn-link collapsable" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="true" aria-controls="collapse-queued">
+                {% else %}
+                <button class="btn btn-link collapsable collapsed" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="false" aria-controls="collapse-queued">
+                {% endif %}
+                    Queued
+                </button>
+            </h5>
+        </div>
+        {% if queue.exists %}
+        <div id="collapse-queued" class="collapse show" aria-labelledby="heading-queued" data-parent="#accordion-packages">
+        {% else %}
+        <div id="collapse-queued" class="collapse" aria-labelledby="heading-queued" data-parent="#accordion-packages">
+        {% endif %}
+            <div class="card-body">
+                {% if queue.exists %}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Package Name</th>
+                        <th>Package Version</th>
+                        <th>Package State</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for package in queue %}
+                    <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
+                        <th scope="row"><a href="{% url 'package' package.name %}">{{ package.name }}</a></th>
+                        <td>{{ package.version }}</td>
+                        <td>{{ package.get_upstream_state_display }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div>
+                    Currently no package is in queue.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header" id="heading-available">
+            <h5 class="mb-0">
+                {% if not progress.exists and not queue.exists %}
+                <button class="btn btn-link collapsable" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="true" aria-controls="collapse-available">
+                {% else %}
+                <button class="btn btn-link collapsable collapsed" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="false" aria-controls="collapse-available">
+                {% endif %}
+                    Available packages
+                </button>
+            </h5>
+        </div>
+        {% if not progress.exists and not queue.exists %}
+        <div id="collapse-available" class="collapse show" aria-labelledby="heading-available" data-parent="#accordion-packages">
+        {% else %}
+        <div id="collapse-available" class="collapse" aria-labelledby="heading-available" data-parent="#accordion-packages">
+        {% endif %}
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Package Name</th>
+                        <th>Package Version</th>
+                        <th>Package State</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for package in packages %}
+                    {% if package not in queue and package not in queue %}
+                    <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
+                        <th scope="row"><a href="{% url 'package' package.name %}">{{ package.name }}</a></th>
+                        <td>{{ package.version }}</td>
+                        <td>{{ package.get_upstream_state_display }}</td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock bodyblock %}
