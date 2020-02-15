@@ -39,9 +39,9 @@
             </h5>
         </div>
         {% if progress.exists %}
-        <div id="collapse-in-progress" class="collapse show" aria-labelledby="heading-in-progress" data-parent="#accordion-packages">
+        <div id="collapse-in-progress" class="collapse show" aria-labelledby="heading-in-progress">
         {% else %}
-        <div id="collapse-in-progress" class="collapse" aria-labelledby="heading-in-progress" data-parent="#accordion-packages">
+        <div id="collapse-in-progress" class="collapse" aria-labelledby="heading-in-progress">
         {% endif %}
             <div class="card-body">
             {% if progress.exists %}
@@ -85,9 +85,9 @@
             </h5>
         </div>
         {% if queue.exists %}
-        <div id="collapse-queued" class="collapse show" aria-labelledby="heading-queued" data-parent="#accordion-packages">
+        <div id="collapse-queued" class="collapse show" aria-labelledby="heading-queued">
         {% else %}
-        <div id="collapse-queued" class="collapse" aria-labelledby="heading-queued" data-parent="#accordion-packages">
+        <div id="collapse-queued" class="collapse" aria-labelledby="heading-queued">
         {% endif %}
             <div class="card-body">
                 {% if queue.exists %}
@@ -136,12 +136,12 @@
             </h5>
         </div>
         {% if not progress.exists and not queue.exists %}
-        <div id="collapse-available" class="collapse show" aria-labelledby="heading-available" data-parent="#accordion-packages">
+        <div id="collapse-available" class="collapse show" aria-labelledby="heading-available">
         {% else %}
-        <div id="collapse-available" class="collapse" aria-labelledby="heading-available" data-parent="#accordion-packages">
+        <div id="collapse-available" class="collapse" aria-labelledby="heading-available">
         {% endif %}
             <div class="card-body">
-                {% if lnonprogressnonqueue != 0 %}
+                {% if lnonprogressnonqueue > 0 %}
                 <table class="table table-hover">
                     <thead>
                     <tr>
