@@ -24,6 +24,61 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
 
 <div class="accordion my-3">
     <div class="card">
+        <div class="card-header" id="heading-available">
+            <h5 class="mb-0">
+                {% if queue.exists %}
+                <button class="btn btn-link collapsable" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="true" aria-controls="collapse-available">
+                    {% else %}
+                    <button class="btn btn-link collapsable collapsed" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="false" aria-controls="collapse-available">
+                        {% endif %}
+                        Available ({{ queue|length }})
+                        <div class="badge badge-danger">TODO: List</div>
+                    </button>
+            </h5>
+        </div>
+        {% if queue.exists %}
+        <div id="collapse-available" class="collapse show" aria-labelledby="heading-available">
+            {% else %}
+            <div id="collapse-available" class="collapse" aria-labelledby="heading-available">
+                {% endif %}
+                <div class="card-body">
+                    {% if queue.exists %}
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for package in queue %}
+                        <tr>
+                            <th scope="row" class="align-middle" title="This package is queued for building">
+                                <img src="{% static 'symbols/icons/check-circle.svg' %}" height="20" alt="Available">
+                                <span class="mx-1">{{ package.name }}</span>
+                                <div class="badge badge-pill badge-primary">{{ package.version }}</div>
+                            </th>
+                            <td class="text-right no-text-decoration actions">
+                                {% if package.wiki_url is not None %}
+                                <a role="button" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
+                                    <img src="{% static 'symbols/icons/book.svg'%}" height="20" alt="Go to ROS wiki page of package">
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <div class="no-packages">
+                        Currently no package available.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    <div class="card">
         <div class="card-header" id="heading-in-progress">
             <h5 class="mb-0">
                 {% if progress.exists %}
@@ -53,7 +108,7 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                     {% for package in progress %}
                     <tr>
                         <th scope="row" class="align-middle" title="Package build in progress">
-                            <img id="gear" src="{% static 'symbols/icons/gear-fill.svg' %}">
+                            <img id="gear" src="{% static 'symbols/icons/gear-fill.svg' %}" height="20" alt="In progress">
                             <span class="mx-1">{{ package.name }}</span>
                             <div class="badge badge-pill badge-primary">{{ package.version }}</div>
                         </th>
@@ -107,7 +162,7 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                     {% for package in queue %}
                     <tr>
                         <th scope="row" class="align-middle" title="This package is queued for building">
-                            <img src="{% static 'symbols/icons/circle-half.svg' %}">
+                            <img src="{% static 'symbols/icons/circle-half.svg' %}" height="20" alt="Queued">
                             <span class="mx-1">{{ package.name }}</span>
                             <div class="badge badge-pill badge-primary">{{ package.version }}</div>
                         </th>
@@ -167,7 +222,7 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                     {% if package not in queue and package not in queue %}
                     <tr>
                         <th scope="row" class="align-middle" title="This package is currently not built">
-                            <img src="{% static 'symbols/icons/circle.svg' %}">
+                            <img src="{% static 'symbols/icons/circle.svg' %}" height="20" alt="Unavailable">
                             <span class="mx-1">{{ package.name }}</span>
                             <div class="badge badge-pill badge-primary">{{ package.version }}</div>
                         </th>
