@@ -46,16 +46,24 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Version</th>
-                        <th>State</th>
+                        <th class="text-right">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for package in progress %}
-                    <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
-                        <th scope="row"><a href="{% url 'package' package.name %}">{{ package.name }}</a></th>
-                        <td>{{ package.version }}</td>
-                        <td>{{ package.get_upstream_state_display }}</td>
+                    <tr>
+                        <th scope="row" class="align-middle" title="Package build in progress">
+                            <img id="gear" src="{% static 'symbols/icons/gear-fill.svg' %}">
+                            <span class="mx-1">{{ package.name }}</span>
+                            <div class="badge badge-pill badge-primary">{{ package.version }}</div>
+                        </th>
+                        <td class="text-right no-text-decoration actions">
+                            {% if package.wiki_url is not None %}
+                            <a role="button" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
+                                <img src="{% static 'symbols/icons/book.svg'%}" height="20" alt="Go to ROS wiki page of package">
+                            </a>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

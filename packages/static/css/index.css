@@ -36,3 +36,9 @@
 .actions {
     min-width: 105px;
 }
+
+#gear {
+    animation:spin 4s linear infinite;
+}
+
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
