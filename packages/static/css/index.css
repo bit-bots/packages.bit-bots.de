@@ -1,3 +1,25 @@
+#content {
+    padding-top: 60px;
+}
+
+#navbar {
+    min-height: 70px;
+    top: 0;
+    transition: top 0.3s; /* Transition effect when sliding down (and up) */
+}
+
+#navbar.active {
+    top: 0;
+}
+
+#navbar:not(.active) {
+    top: -60px;
+}
+
+#navbar:hover {
+    top: 0;
+}
+
 .collapsable::after {
     content: "\f107";
     font-family: "FontAwesome"
