@@ -26,23 +26,22 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
     <div class="card">
         <div class="card-header" id="heading-available">
             <h5 class="mb-0">
-                {% if queue.exists %}
+                {% if available.exists %}
                 <button class="btn btn-link collapsable" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="true" aria-controls="collapse-available">
                     {% else %}
                     <button class="btn btn-link collapsable collapsed" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="false" aria-controls="collapse-available">
                         {% endif %}
-                        Available ({{ queue|length }})
-                        <div class="badge badge-danger">TODO: List</div>
+                        Available ({{ available|length }})
                     </button>
             </h5>
         </div>
-        {% if queue.exists %}
+        {% if available.exists %}
         <div id="collapse-available" class="collapse show" aria-labelledby="heading-available">
             {% else %}
             <div id="collapse-available" class="collapse" aria-labelledby="heading-available">
                 {% endif %}
                 <div class="card-body">
-                    {% if queue.exists %}
+                    {% if available.exists %}
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -51,7 +50,7 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for package in queue %}
+                        {% for package in available %}
                         <tr>
                             <th scope="row" class="align-middle" title="This package is queued for building">
                                 <img src="{% static 'symbols/icons/check-circle.svg' %}" height="20" alt="Available">
@@ -186,12 +185,7 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
         </div>
     </div>
 
-    {% with lpackages=packages|length %}
-    {% with lprogress=progress|length %}
-    {% with lnonprogress=lpackages|sub:lprogress %}
-    {% with lqueue=queue|length %}
-    {% with lnonprogressnonqueue=lnonprogress|sub:lqueue %}
-    {% if lnonprogressnonqueue > 0 %}
+    {% if unavailable.exists %}
     <div class="card">
         <div class="card-header" id="heading-unavailable">
             <h5 class="mb-0">
@@ -200,7 +194,7 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                 {% else %}
                 <button class="btn btn-link collapsable collapsed" type="button" data-toggle="collapse" data-target="#collapse-unavailable" aria-expanded="false" aria-controls="collapse-unavailable">
                 {% endif %}
-                    Unavailable packages ({{ lnonprogressnonqueue }})
+                    Unavailable packages ({{ unavailable|length }})
                 </button>
             </h5>
         </div>
@@ -218,8 +212,7 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for package in packages %}
-                    {% if package not in queue and package not in queue %}
+                    {% for package in unavailable %}
                     <tr>
                         <th scope="row" class="align-middle" title="This package is currently not built">
                             <img src="{% static 'symbols/icons/circle.svg' %}" height="20" alt="Unavailable">
@@ -238,7 +231,6 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                             </a>
                         </td>
                     </tr>
-                    {% endif %}
                     {% endfor %}
                     </tbody>
                 </table>
@@ -246,10 +238,5 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
         </div>
     </div>
     {% endif %}
-    {% endwith %}
-    {% endwith %}
-    {% endwith %}
-    {% endwith %}
-    {% endwith %}
 </div>
 {% endblock bodyblock %}
