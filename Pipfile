@@ -7,7 +7,6 @@ name = "pypi"
 django = "<3.1"
 fasteners = "<0.16"
 requests = "<2.23"
-django-mathfilters = "<1.1"
 
 [dev-packages]
 
