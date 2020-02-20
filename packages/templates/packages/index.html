@@ -8,20 +8,16 @@
             <p class="card-text">All packages have been built for Python 3.</p>
             <p class="card-text">
                 Add the packages to your Ubuntu 18.04 by executing the following commands:
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        To add the Bit-Bots signing key:
-                        <pre><code>sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4C4EDF893374591687621C75C2F8DBB6A37B2874</code></pre>
-                    </li>
-                    <li class="list-group-item">
-                        To add the package repository:
-                        <pre><code>sudo sh -c 'echo "deb {{ LOCAL_URL }} bionic main" &gt; /etc/apt/sources.list.d/ros.list'</code></pre>
-                    </li>
-                </ul>
-            </p>
-            <p class="card-text">
-                Remember to remove previous ROS package repositories from your apt lists.
-                To remove all previously installed ROS Packages run <code>sudo apt remove ros-melodic-*</code> and <code class="code">sudo apt update</code>.
+                <div class="bg-primary rounded p-3">
+                    <pre class="mb-0"><code class="text-light"># To add the Bit-Bots signing key:
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4C4EDF893374591687621C75C2F8DBB6A37B2874
+
+# To add the package repository:
+sudo sh -c 'echo "deb {{ LOCAL_URL }} bionic main" &gt; /etc/apt/sources.list.d/ros.list'
+
+# To remove all previously installed ROS Packages:
+sudo apt remove ros-melodic-* && sudo apt update</code></pre>
+                </div>
             </p>
         </div>
     </div>
