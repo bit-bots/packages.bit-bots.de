@@ -1,4 +1,5 @@
 {% extends 'packages/base.html' %}
+{% load static %}
 {% load mathfilters %}
 {% block bodyblock %}
     <div class="card my-3">
@@ -25,7 +26,7 @@
         </div>
     </div>
 
-<div class="accordion my-3" id="accordion-packages">
+<div class="accordion my-3">
     <div class="card">
         <div class="card-header" id="heading-in-progress">
             <h5 class="mb-0">
@@ -131,7 +132,7 @@
                 {% else %}
                 <button class="btn btn-link collapsable collapsed" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="false" aria-controls="collapse-available">
                 {% endif %}
-                    Available packages ({{ lnonprogressnonqueue }})
+                    Unavailable packages ({{ lnonprogressnonqueue }})
                 </button>
             </h5>
         </div>
@@ -146,17 +147,28 @@
                     <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Version</th>
-                        <th>State</th>
+                        <th class="text-right">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for package in packages %}
                     {% if package not in queue and package not in queue %}
                     <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
-                        <th scope="row"><a href="{% url 'package' package.name %}">{{ package.name }}</a></th>
-                        <td>{{ package.version }}</td>
-                        <td>{{ package.get_upstream_state_display }}</td>
+                        <th scope="row"  class="align-middle m-1" title="This package is currently not built">
+                            <img class="m-1" src="{% static 'symbols/icons/circle.svg' %}">
+                            {{ package.name }}
+                            <div class="badge badge-pill badge-primary m-1">{{ package.version }}</div>
+                        </th>
+                        <td class="text-right no-text-decoration">
+                            {% if package.wiki_url is not None %}
+                            <a role="button" class="m-1" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
+                                <img src="{% static 'symbols/icons/book.svg'%}" height="20" alt="Go to ROS wiki page of package">
+                            </a>
+                            {% endif %}
+                            <a role="button" class="btn btn-outline-primary" href="{% url 'request' package.name %}" title="Build package">
+                                <img src="{% static 'symbols/icons/hammer.svg' %}" height="20" alt="Build package">
+                            </a>
+                        </td>
                     </tr>
                     {% endif %}
                     {% endfor %}

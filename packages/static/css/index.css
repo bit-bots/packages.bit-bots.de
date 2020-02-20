@@ -29,14 +29,6 @@
     content: "\f106";
 }
 
-.upstream-state-0 {
-    background-color: #FFEB3B;
-}
-
-.upstream-state-1 {
-    background-color: #8BC34A;
-}
-
-.upstream-state-2 {
-    background-color: #BDBDBD;
+.no-text-decoration  > * {
+    text-decoration: none !important;
 }
