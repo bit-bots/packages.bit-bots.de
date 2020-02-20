@@ -92,16 +92,24 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                     <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Version</th>
-                        <th>State</th>
+                        <th class="text-right">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for package in queue %}
-                    <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
-                        <th scope="row"><a href="{% url 'package' package.name %}">{{ package.name }}</a></th>
-                        <td>{{ package.version }}</td>
-                        <td>{{ package.get_upstream_state_display }}</td>
+                    <tr>
+                        <th scope="row" class="align-middle" title="This package is queued for building">
+                            <img src="{% static 'symbols/icons/circle-half.svg' %}">
+                            <span class="mx-1">{{ package.name }}</span>
+                            <div class="badge badge-pill badge-primary">{{ package.version }}</div>
+                        </th>
+                        <td class="text-right no-text-decoration actions">
+                            {% if package.wiki_url is not None %}
+                            <a role="button" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
+                                <img src="{% static 'symbols/icons/book.svg'%}" height="20" alt="Go to ROS wiki page of package">
+                            </a>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -149,17 +157,18 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                     <tbody>
                     {% for package in packages %}
                     {% if package not in queue and package not in queue %}
-                    <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
-                        <th scope="row"  class="align-middle m-1" title="This package is currently not built">
-                            <img class="m-1" src="{% static 'symbols/icons/circle.svg' %}">
-                            {{ package.name }}
-                            <div class="badge badge-pill badge-primary m-1">{{ package.version }}</div>
+                    <tr>
+                        <th scope="row" class="align-middle" title="This package is currently not built">
+                            <img src="{% static 'symbols/icons/circle.svg' %}">
+                            <span class="mx-1">{{ package.name }}</span>
+                            <div class="badge badge-pill badge-primary">{{ package.version }}</div>
                         </th>
-                        <td class="text-right no-text-decoration">
+                        <td class="text-right no-text-decoration actions">
                             {% if package.wiki_url is not None %}
-                            <a role="button" class="m-1" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
+                            <a role="button" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
                                 <img src="{% static 'symbols/icons/book.svg'%}" height="20" alt="Go to ROS wiki page of package">
                             </a>
+                            <span class="pr-1"></span>
                             {% endif %}
                             <a role="button" class="btn btn-outline-primary" href="{% url 'request' package.name %}" title="Build package">
                                 <img src="{% static 'symbols/icons/hammer.svg' %}" height="20" alt="Build package">
