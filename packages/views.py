@@ -13,13 +13,10 @@ def index(request: HttpRequest) -> HttpResponse:
         'progress': Package.objects.filter(local_state=LocalState.IN_PROGRESS),
         'queue': Package.objects.filter(local_state=LocalState.QUEUED),
         'unavailable': Package.objects.filter(Q(upstream_state=UpstreamState.ONLY_UPSTREAM) & ~Q(local_state=LocalState.IN_PROGRESS) & ~Q(local_state=LocalState.QUEUED)),
-        'LOCAL_URL': settings.LOCAL_URL
+        'LOCAL_URL': settings.LOCAL_URL,
+        'URL_IMPRINT': settings.URL_IMPRINT,
+        'URL_PRIVACY_POLICY': settings.URL_PRIVACY_POLICY,
     })
-
-
-def package(request: HttpRequest, package_name: str) -> HttpResponse:
-    package = get_object_or_404(Package, name=package_name)
-    return render(request, 'packages/package.html', {'package': package})
 
 
 def request(request: HttpRequest, package_name: str) -> HttpResponse:

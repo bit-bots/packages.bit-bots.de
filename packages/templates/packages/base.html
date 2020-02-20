@@ -18,11 +18,11 @@
 
     <body>
         <nav class="navbar fixed-top navbar-dark bg-primary active" id="navbar">
-            <a class="navbar-brand" href="#">
-                <img src="{% static 'symbols/bit-bot.svg' %}" height="30" class="d-inline-block align-top" alt="Bit-Bots Logo">
-                <span class="p-1"></span>
-                Hamburg Bit-Bots ROS Packages
+            <a href="#">
+                <img src="{% static 'symbols/bit-bot.svg' %}" height="50" class="navbar-brand align-middle" alt="Bit-Bots Logo">
+                <div class="navbar-text">Hamburg Bit-Bots ROS Packages</div>
             </a>
+            <span class="mx-1"></span>
             <div class="my-2 my-lg-0 btn-group" role="group">
                 <a class="btn btn-outline-secondary" role="button" href="https://github.com/bit-bots/packages.bit-bots.de">
                     <img src="{% static 'symbols/GitHub-Mark/PNG/GitHub-Mark-Light-32px.png' %}" height="20" alt="packages.bitbots.de at Github.com">
@@ -38,10 +38,11 @@
             {% endblock bodyblock %}
         </div>
 
-        <!-- TODO: Click on entire card-head to collapse -->
-        <!-- TODO: Move card head arrows to the right -->
-        <!-- TODO: package-layout -->
-        <!-- TODO: Footer -->
+        <footer class="bg-primary text-center align-middle p-3">
+            <a href="{{ URL_IMPRINT }}" class="text-light">Imprint</a>
+            <span class="p-2 text-light">|</span>
+            <a href="{{ URL_PRIVACY_POLICY }}" class="text-light">Privacy policy</a>
+        </footer>
 
         <!-- Include bootstrap js -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -126,6 +126,10 @@ STATIC_URL = '/static/'
 LOCAL_URL = 'http://packages.bit-bots.de'
 # URL where the upstream (original) ROS packages are
 UPSTREAM_URL = 'http://packages.ros.org/ros/ubuntu'
+# URL to imprint
+URL_IMPRINT = 'https://robocup.informatik.uni-hamburg.de/en/imprint/'
+# URL to privacy policy
+URL_PRIVACY_POLICY = 'https://robocup.informatik.uni-hamburg.de/en/privacy-policy/'
 
 # (temporary) output directory for built packages
 OUTPUT_DIR = os.path.join(BASE_DIR, 'out')

@@ -24,69 +24,59 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
 
 <div class="accordion my-3">
     <div class="card">
-        <div class="card-header" id="heading-available">
+        <div class="card-header collapsable collapsed" id="heading-available" data-toggle="collapse" data-target="#collapse-available" aria-expanded="false" aria-controls="collapse-available">
             <h5 class="mb-0">
-                {% if available.exists %}
-                <button class="btn btn-link collapsable" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="true" aria-controls="collapse-available">
-                    {% else %}
-                    <button class="btn btn-link collapsable collapsed" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="false" aria-controls="collapse-available">
-                        {% endif %}
-                        Available ({{ available|length }})
-                    </button>
+                Available ({{ available|length }})
+                <span class="arrow align-middle float-right"></span>
             </h5>
         </div>
-        {% if available.exists %}
-        <div id="collapse-available" class="collapse show" aria-labelledby="heading-available">
-            {% else %}
-            <div id="collapse-available" class="collapse" aria-labelledby="heading-available">
-                {% endif %}
-                <div class="card-body">
-                    {% if available.exists %}
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th class="text-right">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for package in available %}
-                        <tr>
-                            <th scope="row" class="align-middle" title="This package is queued for building">
-                                <img src="{% static 'symbols/icons/check-circle.svg' %}" height="20" alt="Available">
-                                <span class="mx-1">{{ package.name }}</span>
-                                <div class="badge badge-pill badge-primary">{{ package.version }}</div>
-                            </th>
-                            <td class="text-right no-text-decoration actions">
-                                {% if package.wiki_url is not None %}
-                                <a role="button" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
-                                    <img src="{% static 'symbols/icons/book.svg'%}" height="20" alt="Go to ROS wiki page of package">
-                                </a>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    {% else %}
-                    <div class="no-packages">
-                        Currently no package available.
-                    </div>
-                    {% endif %}
+        <div id="collapse-available" class="collapse" aria-labelledby="heading-available">
+            <div class="card-body">
+                {% if available.exists %}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for package in available %}
+                    <tr>
+                        <th scope="row" class="align-middle" title="This package is queued for building">
+                            <img src="{% static 'symbols/icons/check-circle.svg' %}" height="20" alt="Available">
+                            <span class="mx-1">{{ package.name }}</span>
+                            <div class="badge badge-pill badge-primary">{{ package.version }}</div>
+                        </th>
+                        <td class="text-right no-text-decoration actions">
+                            {% if package.wiki_url is not None %}
+                            <a role="button" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
+                                <img src="{% static 'symbols/icons/book.svg'%}" height="20" alt="Go to ROS wiki page of package">
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="no-packages">
+                    Currently no package available.
                 </div>
+                {% endif %}
             </div>
         </div>
+    </div>
 
     <div class="card">
-        <div class="card-header" id="heading-in-progress">
+        {% if progress.exists %}
+        <div class="card-header collapsable" id="heading-in-progress" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="true" aria-controls="collapse-in-progress">
+        {% else %}
+        <div class="card-header collapsable collapsed" id="heading-in-progress" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="false" aria-controls="collapse-in-progress">
+        {% endif %}
             <h5 class="mb-0">
-                {% if progress.exists %}
-                <button class="btn btn-link collapsable" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="true" aria-controls="collapse-in-progress">
-                {% else %}
-                <button class="btn btn-link collapsable collapsed" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="false" aria-controls="collapse-in-progress">
-                {% endif %}
-                    In progress ({{ progress|length }})
-                </button>
+                In progress ({{ progress|length }})
+                <span class="arrow align-middle float-right"></span>
             </h5>
         </div>
         {% if progress.exists %}
@@ -132,15 +122,14 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
     </div>
 
     <div class="card">
-        <div class="card-header" id="heading-queued">
+        {% if queue.exists %}
+        <div class="card-header collapsable" id="heading-queued" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="true" aria-controls="collapse-queued">
+        {% else %}
+        <div class="card-header collapsable collapsed" id="heading-queued" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="false" aria-controls="collapse-queued">
+        {% endif %}
             <h5 class="mb-0">
-                {% if queue.exists %}
-                <button class="btn btn-link collapsable" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="true" aria-controls="collapse-queued">
-                {% else %}
-                <button class="btn btn-link collapsable collapsed" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="false" aria-controls="collapse-queued">
-                {% endif %}
-                    Queued ({{ queue|length }})
-                </button>
+                Queued ({{ queue|length }})
+                <span class="arrow align-middle float-right"></span>
             </h5>
         </div>
         {% if queue.exists %}
@@ -187,22 +176,13 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
 
     {% if unavailable.exists %}
     <div class="card">
-        <div class="card-header" id="heading-unavailable">
+        <div class="card-header collapsable collapsed" id="heading-unavailable" data-toggle="collapse" data-target="#collapse-unavailable" aria-expanded="false" aria-controls="collapse-unavailable">
             <h5 class="mb-0">
-                {% if not progress.exists and not queue.exists %}
-                <button class="btn btn-link collapsable" type="button" data-toggle="collapse" data-target="#collapse-unavailable" aria-expanded="true" aria-controls="collapse-unavailable">
-                {% else %}
-                <button class="btn btn-link collapsable collapsed" type="button" data-toggle="collapse" data-target="#collapse-unavailable" aria-expanded="false" aria-controls="collapse-unavailable">
-                {% endif %}
-                    Unavailable packages ({{ unavailable|length }})
-                </button>
+                Unavailable ({{ unavailable|length }})
+                <span class="arrow align-middle float-right"></span>
             </h5>
         </div>
-        {% if not progress.exists and not queue.exists %}
-        <div id="collapse-unavailable" class="collapse show" aria-labelledby="heading-unavailable">
-        {% else %}
         <div id="collapse-unavailable" class="collapse" aria-labelledby="heading-unavailable">
-        {% endif %}
             <div class="card-body">
                 <table class="table table-hover">
                     <thead>
@@ -226,7 +206,7 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                             </a>
                             <span class="pr-1"></span>
                             {% endif %}
-                            <a role="button" class="btn btn-outline-primary" href="{% url 'request' package.name %}" title="Build package">
+                            <a role="button" class="btn btn-outline-secondary" href="{% url 'request' package.name %}" title="Build package">
                                 <img src="{% static 'symbols/icons/hammer.svg' %}" height="20" alt="Build package">
                             </a>
                         </td>

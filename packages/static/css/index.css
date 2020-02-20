@@ -1,5 +1,5 @@
 #content {
-    padding-top: 60px;
+    padding-top: 120px;
 }
 
 #navbar {
@@ -20,12 +20,12 @@
     top: 0;
 }
 
-.collapsable::after {
+.collapsable .arrow::after {
     content: "\f107";
     font-family: "FontAwesome"
 }
 
-.collapsable[aria-expanded="true"]::after {
+.collapsable[aria-expanded="true"] .arrow::after {
     content: "\f106";
 }
 
