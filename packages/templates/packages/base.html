@@ -17,21 +17,27 @@
     </head>
 
     <body>
-        <nav class="navbar fixed-top navbar-dark bg-primary active" id="navbar">
-            <a href="#">
-                <img src="{% static 'symbols/bit-bot.svg' %}" height="50" class="navbar-brand align-middle" alt="Bit-Bots Logo">
-                <div class="navbar-text">Hamburg Bit-Bots ROS Packages</div>
+        <nav class="d-flex navbar navbar-expand-lg fixed-top navbar-dark bg-primary shadow active" id="navbar">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'symbols/bit-bot.svg' %}" height="40" class="align-middle" alt="Bit-Bots Logo">
+                <div class="ml-2 d-none d-sm-inline-flex text-light">Hamburg Bit-Bots ROS Packages</div>
             </a>
-            <span class="mx-1"></span>
-            <div class="my-2 my-lg-0 btn-group" role="group">
-                <a class="btn btn-outline-secondary" role="button" href="https://github.com/bit-bots/packages.bit-bots.de">
-                    <img src="{% static 'symbols/GitHub-Mark/PNG/GitHub-Mark-Light-32px.png' %}" height="20" alt="packages.bitbots.de at Github.com">
-                </a>
-                <a class="btn btn-outline-secondary" role="button" href="https://bit-bots.de">
-                    Go to bit-bots.de
-                </a>
+            <span class="flex-grow-1"></span>
+            <button class="navbar-toggler float-right" type="button" data-toggle="collapse" data-target="#nav-hide" aria-controls="nav-hide" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="flex-grow-0 collapse navbar-collapse" id="nav-hide">
+                <div class="my-2 my-lg-0 btn-group" role="group">
+                    <a class="btn btn-outline-secondary" role="button" href="https://github.com/bit-bots/packages.bit-bots.de">
+                        <img src="{% static 'symbols/GitHub-Mark/PNG/GitHub-Mark-Light-32px.png' %}" height="20" alt="packages.bitbots.de at Github.com">
+                    </a>
+                    <a class="btn btn-outline-secondary" role="button" href="https://bit-bots.de">
+                        Go to bit-bots.de
+                    </a>
+                </div>
             </div>
         </nav>
+
         <div class="container my-3" id="content">
             <h1>Packages</h1>
             {% block bodyblock %}
