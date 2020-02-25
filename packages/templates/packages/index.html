@@ -23,7 +23,7 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
 
 <div class="accordion my-3">
     <div class="card">
-        <div class="card-header collapsable collapsed" id="heading-available" data-toggle="collapse" data-target="#collapse-available" aria-expanded="false" aria-controls="collapse-available">
+        <div class="card-header collapsable collapsed" id="heading-available" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="false" aria-controls="collapse-available">
             <h5 class="mb-0">
                 Available ({{ available|length }})
                 <span class="arrow align-middle float-right"></span>
@@ -122,9 +122,9 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
 
     <div class="card">
         {% if queue.exists %}
-        <div class="card-header collapsable" id="heading-queued" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="true" aria-controls="collapse-queued">
+        <div class="card-header collapsable" id="heading-queued" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="true" aria-controls="collapse-queued">
         {% else %}
-        <div class="card-header collapsable collapsed" id="heading-queued" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="false" aria-controls="collapse-queued">
+        <div class="card-header collapsable collapsed" id="heading-queued" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="false" aria-controls="collapse-queued">
         {% endif %}
             <h5 class="mb-0">
                 Queued ({{ queue|length }})
@@ -175,7 +175,7 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
 
     {% if unavailable.exists %}
     <div class="card">
-        <div class="card-header collapsable collapsed" id="heading-unavailable" data-toggle="collapse" data-target="#collapse-unavailable" aria-expanded="false" aria-controls="collapse-unavailable">
+        <div class="card-header collapsable collapsed" id="heading-unavailable" type="button" data-toggle="collapse" data-target="#collapse-unavailable" aria-expanded="false" aria-controls="collapse-unavailable">
             <h5 class="mb-0">
                 Unavailable ({{ unavailable|length }})
                 <span class="arrow align-middle float-right"></span>
