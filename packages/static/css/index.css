@@ -1,45 +1,44 @@
-body {
-    font-family: sans-serif;
-    margin: 0;
-    padding: 0;
+#content {
+    padding-top: 70px;
 }
 
-header {
-    font-size: larger;
-    background-color: #e4e4e4;
-    padding: 12px;
-    text-align: center;
+#navbar {
+    min-height: 70px;
+    top: 0;
+    transition: top 0.3s; /* Transition effect when sliding down (and up) */
 }
 
-#body {
-    width: 75%;
-    margin: auto;
+#navbar.active {
+    top: 0;
 }
 
-.code {
-    font-family: monospace;
+#navbar:not(.active) {
+    top: -60px;
 }
 
-#packages {
-    width: 100%;
-    border-collapse: collapse;
+#navbar:hover {
+    top: 0;
 }
 
-.package > td, th {
-    padding: 8px 14px;
-    text-align: left;
-    border-top: 1px solid white;
-    border-bottom: 1px solid white;
+.collapsable .arrow::after {
+    content: "\f107";
+    font-family: "FontAwesome"
 }
 
-.upstream-state-0 {
-    background-color: #FFEB3B;
+.collapsable[aria-expanded="true"] .arrow::after {
+    content: "\f106";
 }
 
-.upstream-state-1 {
-    background-color: #8BC34A;
+.no-text-decoration  > * {
+    text-decoration: none !important;
 }
 
-.upstream-state-2 {
-    background-color: #BDBDBD;
+.actions {
+    min-width: 105px;
 }
+
+#gear {
+    animation:spin 4s linear infinite;
+}
+
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }

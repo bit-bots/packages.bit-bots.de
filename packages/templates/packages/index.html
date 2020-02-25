@@ -1,42 +1,221 @@
 {% extends 'packages/base.html' %}
+{% load static %}
 {% block bodyblock %}
-    <p>All packages have been built for Python 3.
-        Add the packages to your Ubuntu 18.04 by executing
-        <ul>
-            <li><span class="code">sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4C4EDF893374591687621C75C2F8DBB6A37B2874</span> to add the Bit-Bots signing key</li>
-            <li><span class="code">sudo sh -c 'echo "deb {{ LOCAL_URL }} bionic main" &gt; /etc/apt/sources.list.d/ros.list'</span> to add the package repository</li>
-        </ul>
-        Remember to remove previous ROS package repositories from your apt lists, to remove all previously installed ROS Packages (<span class="code">sudo apt remove ros-melodic-*</span>) and run <span class="code">sudo apt update.</span>
-    </p>
-    {% if progress.exists or queue.exists %}
-    <h4>In progress</h4>
-    <table id="packages">
-        <tr><th>Package Name</th><th>Package Version</th><th>Package State</th></tr>
-        {% for package in progress %}
-            <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
-                <td><a href="{% url 'package' package.name %}">{{ package.name }}</a></td>
-                <td>{{ package.version }}</td>
-                <td>{{ package.get_upstream_state_display }}</td>
-            </tr>
-        {% endfor %}
-        {% for package in queue %}
-            <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
-                <td><a href="{% url 'package' package.name %}">{{ package.name }}</a></td>
-                <td>{{ package.version }}</td>
-                <td>{{ package.get_upstream_state_display }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    <div class="card my-3">
+        <h5 class="mb-0 card-header">Getting started</h5>
+        <div class="card-body">
+            <p class="card-text">All packages have been built for Python 3.</p>
+            <p class="card-text">
+                Add the packages to your Ubuntu 18.04 by executing the following commands:
+                <div class="bg-primary rounded p-3">
+                    <pre class="mb-0"><code class="text-light"># To add the Bit-Bots signing key:
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4C4EDF893374591687621C75C2F8DBB6A37B2874
+
+# To add the package repository:
+sudo sh -c 'echo "deb {{ LOCAL_URL }} bionic main" &gt; /etc/apt/sources.list.d/ros.list'
+
+# To remove all previously installed ROS Packages:
+sudo apt remove ros-melodic-* && sudo apt update</code></pre>
+                </div>
+            </p>
+        </div>
+    </div>
+
+<div class="accordion my-3">
+    <div class="card">
+        <div class="card-header collapsable collapsed" id="heading-available" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="false" aria-controls="collapse-available">
+            <h5 class="mb-0">
+                Available ({{ available|length }})
+                <span class="arrow align-middle float-right"></span>
+            </h5>
+        </div>
+        <div id="collapse-available" class="collapse" aria-labelledby="heading-available">
+            <div class="card-body">
+                {% if available.exists %}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for package in available %}
+                    <tr>
+                        <th scope="row" class="align-middle" title="This package is queued for building">
+                            <img src="{% static 'symbols/icons/check-circle.svg' %}" height="20" alt="Available">
+                            <span class="mx-1">{{ package.name }}</span>
+                            <div class="badge badge-pill badge-primary">{{ package.version }}</div>
+                        </th>
+                        <td class="text-right no-text-decoration actions">
+                            {% if package.wiki_url is not None %}
+                            <a role="button" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
+                                <img src="{% static 'symbols/icons/book.svg'%}" height="20" alt="Go to ROS wiki page of package">
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="no-packages">
+                    Currently no package available.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        {% if progress.exists %}
+        <div class="card-header collapsable" id="heading-in-progress" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="true" aria-controls="collapse-in-progress">
+        {% else %}
+        <div class="card-header collapsable collapsed" id="heading-in-progress" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="false" aria-controls="collapse-in-progress">
+        {% endif %}
+            <h5 class="mb-0">
+                In progress ({{ progress|length }})
+                <span class="arrow align-middle float-right"></span>
+            </h5>
+        </div>
+        {% if progress.exists %}
+        <div id="collapse-in-progress" class="collapse show" aria-labelledby="heading-in-progress">
+        {% else %}
+        <div id="collapse-in-progress" class="collapse" aria-labelledby="heading-in-progress">
+        {% endif %}
+            <div class="card-body">
+            {% if progress.exists %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for package in progress %}
+                    <tr>
+                        <th scope="row" class="align-middle" title="Package build in progress">
+                            <img id="gear" src="{% static 'symbols/icons/gear-fill.svg' %}" height="20" alt="In progress">
+                            <span class="mx-1">{{ package.name }}</span>
+                            <div class="badge badge-pill badge-primary">{{ package.version }}</div>
+                        </th>
+                        <td class="text-right no-text-decoration actions">
+                            {% if package.wiki_url is not None %}
+                            <a role="button" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
+                                <img src="{% static 'symbols/icons/book.svg'%}" height="20" alt="Go to ROS wiki page of package">
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="no-packages">
+                Currently no package build is in progress.
+            </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        {% if queue.exists %}
+        <div class="card-header collapsable" id="heading-queued" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="true" aria-controls="collapse-queued">
+        {% else %}
+        <div class="card-header collapsable collapsed" id="heading-queued" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="false" aria-controls="collapse-queued">
+        {% endif %}
+            <h5 class="mb-0">
+                Queued ({{ queue|length }})
+                <span class="arrow align-middle float-right"></span>
+            </h5>
+        </div>
+        {% if queue.exists %}
+        <div id="collapse-queued" class="collapse show" aria-labelledby="heading-queued">
+        {% else %}
+        <div id="collapse-queued" class="collapse" aria-labelledby="heading-queued">
+        {% endif %}
+            <div class="card-body">
+                {% if queue.exists %}
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for package in queue %}
+                    <tr>
+                        <th scope="row" class="align-middle" title="This package is queued for building">
+                            <img src="{% static 'symbols/icons/circle-half.svg' %}" height="20" alt="Queued">
+                            <span class="mx-1">{{ package.name }}</span>
+                            <div class="badge badge-pill badge-primary">{{ package.version }}</div>
+                        </th>
+                        <td class="text-right no-text-decoration actions">
+                            {% if package.wiki_url is not None %}
+                            <a role="button" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
+                                <img src="{% static 'symbols/icons/book.svg'%}" height="20" alt="Go to ROS wiki page of package">
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="no-packages">
+                    Currently no package is in queue.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if unavailable.exists %}
+    <div class="card">
+        <div class="card-header collapsable collapsed" id="heading-unavailable" type="button" data-toggle="collapse" data-target="#collapse-unavailable" aria-expanded="false" aria-controls="collapse-unavailable">
+            <h5 class="mb-0">
+                Unavailable ({{ unavailable|length }})
+                <span class="arrow align-middle float-right"></span>
+            </h5>
+        </div>
+        <div id="collapse-unavailable" class="collapse" aria-labelledby="heading-unavailable">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for package in unavailable %}
+                    <tr>
+                        <th scope="row" class="align-middle" title="This package is currently not built">
+                            <img src="{% static 'symbols/icons/circle.svg' %}" height="20" alt="Unavailable">
+                            <span class="mx-1">{{ package.name }}</span>
+                            <div class="badge badge-pill badge-primary">{{ package.version }}</div>
+                        </th>
+                        <td class="text-right no-text-decoration actions">
+                            {% if package.wiki_url is not None %}
+                            <a role="button" href="{{ package.wiki_url }}" title="Go to ROS wiki page of package">
+                                <img src="{% static 'symbols/icons/book.svg'%}" height="20" alt="Go to ROS wiki page of package">
+                            </a>
+                            <span class="pr-1"></span>
+                            {% endif %}
+                            <a role="button" class="btn btn-outline-secondary" href="{% url 'request' package.name %}" title="Build package">
+                                <img src="{% static 'symbols/icons/hammer.svg' %}" height="20" alt="Build package">
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     {% endif %}
-    <h4>All packages</h4>
-    <table id="packages">
-        <tr><th>Package Name</th><th>Package Version</th><th>Package State</th></tr>
-        {% for package in packages %}
-            <tr class="upstream-state-{{ package.upstream_state }} local-state-{{ package.local_state }} package">
-                <td><a href="{% url 'package' package.name %}">{{ package.name }}</a></td>
-                <td>{{ package.version }}</td>
-                <td>{{ package.get_upstream_state_display }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+</div>
 {% endblock bodyblock %}
