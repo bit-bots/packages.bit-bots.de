@@ -17,38 +17,42 @@
     </head>
 
     <body>
-        <nav class="d-flex navbar navbar-expand-lg fixed-top navbar-dark bg-primary shadow active" id="navbar">
-            <a class="navbar-brand" href="#">
-                <img src="{% static 'symbols/bit-bot_white.svg' %}" height="40" class="align-middle" alt="Bit-Bots Logo">
-                <div class="ml-2 d-none d-sm-inline-flex text-light">Hamburg Bit-Bots ROS Packages</div>
-            </a>
-            <span class="flex-grow-1"></span>
-            <button class="navbar-toggler float-right" type="button" data-toggle="collapse" data-target="#nav-hide" aria-controls="nav-hide" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="flex-grow-0 collapse navbar-collapse" id="nav-hide">
-                <div class="my-2 my-lg-0 btn-group" role="group">
-                    <a class="btn btn-outline-secondary" role="button" href="https://github.com/bit-bots/packages.bit-bots.de">
-                        <img src="{% static 'symbols/GitHub-Mark/PNG/GitHub-Mark-Light-32px.png' %}" height="20" alt="packages.bitbots.de at Github.com">
-                    </a>
-                    <a class="btn btn-outline-secondary" role="button" href="https://bit-bots.de">
-                        Go to bit-bots.de
-                    </a>
+        <div id="content" class="d-flex flex-column h-100">
+            <nav class="d-flex navbar navbar-expand-md fixed-top navbar-dark bg-primary shadow active" id="navbar">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'symbols/bit-bot_white.svg' %}" height="40" class="align-middle" alt="Bit-Bots Logo">
+                    <div class="ml-2 d-none d-sm-inline-flex text-light">Hamburg Bit-Bots ROS Packages</div>
+                </a>
+                <span class="flex-grow-1"></span>
+                <button class="navbar-toggler float-right" type="button" data-toggle="collapse" data-target="#nav-hide" aria-controls="nav-hide" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="flex-grow-0 collapse navbar-collapse" id="nav-hide">
+                    <div class="my-2 my-lg-0">
+                        <a class="btn btn-outline-secondary my-1" role="button" href="https://github.com/bit-bots/packages.bit-bots.de">
+                            <img src="{% static 'symbols/GitHub-Mark/PNG/GitHub-Mark-Light-64px.png' %}" height="20" class="align-middle" alt="packages.bitbots.de at Github.com">
+                            Go to source code
+                        </a>
+                        <a class="btn btn-outline-secondary my-1" role="button" href="https://bit-bots.de">
+                            <img src="{% static 'symbols/bit-bot_white.svg' %}" height="20" class="align-middle" alt="Hamburg Bit-Bots Logo">
+                            Go to bit-bots.de
+                        </a>
+                    </div>
                 </div>
+            </nav>
+
+            <div class="container my-3" id="content-main">
+                <h1>Packages</h1>
+                {% block bodyblock %}
+                {% endblock bodyblock %}
             </div>
-        </nav>
 
-        <div class="container my-3" id="content">
-            <h1>Packages</h1>
-            {% block bodyblock %}
-            {% endblock bodyblock %}
+            <footer class="bg-primary text-center align-middle p-3 mt-auto">
+                <a href="{{ URL_IMPRINT }}" class="text-light">Imprint</a>
+                <span class="p-2 text-light">|</span>
+                <a href="{{ URL_PRIVACY_POLICY }}" class="text-light">Privacy policy</a>
+            </footer>
         </div>
-
-        <footer class="bg-primary text-center align-middle p-3">
-            <a href="{{ URL_IMPRINT }}" class="text-light">Imprint</a>
-            <span class="p-2 text-light">|</span>
-            <a href="{{ URL_PRIVACY_POLICY }}" class="text-light">Privacy policy</a>
-        </footer>
 
         <!-- Include bootstrap js -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
