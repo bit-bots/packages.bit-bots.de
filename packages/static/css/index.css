@@ -25,13 +25,20 @@ body {
     top: 0;
 }
 
-.collapsable .arrow::after {
-    content: "\f107";
-    font-family: "FontAwesome";
+.collapsable .arrow-down {
+    display: block;
 }
 
-.collapsable[aria-expanded="true"] .arrow::after {
-    content: "\f106";
+.collapsable .arrow-up {
+    display: none;
+}
+
+.collapsable[aria-expanded="true"] .arrow-up {
+    display: block;
+}
+
+.collapsable[aria-expanded="true"] .arrow-down {
+    display: none;
 }
 
 .no-text-decoration  > * {

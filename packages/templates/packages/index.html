@@ -23,11 +23,12 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
 
 <div class="accordion my-3">
     <div class="card">
-        <div class="card-header collapsable collapsed" id="heading-available" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="false" aria-controls="collapse-available">
+        <div class="card-header d-flex justify-content-between collapsable collapsed" id="heading-available" type="button" data-toggle="collapse" data-target="#collapse-available" aria-expanded="false" aria-controls="collapse-available">
             <h5 class="mb-0">
                 Available ({{ available|length }})
-                <span class="arrow align-middle float-right"></span>
             </h5>
+            <img src="{% static 'symbols/icons/chevron-up.svg' %}" class="arrow-up" height="20" alt="Hide">
+            <img src="{% static 'symbols/icons/chevron-down.svg' %}" class="arrow-down" height="20" alt="Show">
         </div>
         <div id="collapse-available" class="collapse" aria-labelledby="heading-available">
             <div class="card-body">
@@ -69,14 +70,15 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
 
     <div class="card">
         {% if progress.exists %}
-        <div class="card-header collapsable" id="heading-in-progress" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="true" aria-controls="collapse-in-progress">
+        <div class="card-header d-flex justify-content-betweencollapsable" id="heading-in-progress" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="true" aria-controls="collapse-in-progress">
         {% else %}
-        <div class="card-header collapsable collapsed" id="heading-in-progress" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="false" aria-controls="collapse-in-progress">
+        <div class="card-header d-flex justify-content-between collapsable collapsed" id="heading-in-progress" type="button" data-toggle="collapse" data-target="#collapse-in-progress" aria-expanded="false" aria-controls="collapse-in-progress">
         {% endif %}
             <h5 class="mb-0">
                 In progress ({{ progress|length }})
-                <span class="arrow align-middle float-right"></span>
             </h5>
+            <img src="{% static 'symbols/icons/chevron-up.svg' %}" class="arrow-up" height="20" alt="Hide">
+            <img src="{% static 'symbols/icons/chevron-down.svg' %}" class="arrow-down" height="20" alt="Show">
         </div>
         {% if progress.exists %}
         <div id="collapse-in-progress" class="collapse show" aria-labelledby="heading-in-progress">
@@ -122,14 +124,15 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
 
     <div class="card">
         {% if queue.exists %}
-        <div class="card-header collapsable" id="heading-queued" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="true" aria-controls="collapse-queued">
+        <div class="card-header d-flex justify-content-between collapsable" id="heading-queued" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="true" aria-controls="collapse-queued">
         {% else %}
-        <div class="card-header collapsable collapsed" id="heading-queued" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="false" aria-controls="collapse-queued">
+        <div class="card-header d-flex justify-content-between collapsable collapsed" id="heading-queued" type="button" data-toggle="collapse" data-target="#collapse-queued" aria-expanded="false" aria-controls="collapse-queued">
         {% endif %}
             <h5 class="mb-0">
                 Queued ({{ queue|length }})
-                <span class="arrow align-middle float-right"></span>
             </h5>
+            <img src="{% static 'symbols/icons/chevron-up.svg' %}" class="arrow-up" height="20" alt="Hide">
+            <img src="{% static 'symbols/icons/chevron-down.svg' %}" class="arrow-down" height="20" alt="Show">
         </div>
         {% if queue.exists %}
         <div id="collapse-queued" class="collapse show" aria-labelledby="heading-queued">
@@ -175,11 +178,12 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
 
     {% if unavailable.exists %}
     <div class="card">
-        <div class="card-header collapsable collapsed" id="heading-unavailable" type="button" data-toggle="collapse" data-target="#collapse-unavailable" aria-expanded="false" aria-controls="collapse-unavailable">
+        <div class="card-header d-flex justify-content-between collapsable collapsed" id="heading-unavailable" type="button" data-toggle="collapse" data-target="#collapse-unavailable" aria-expanded="false" aria-controls="collapse-unavailable">
             <h5 class="mb-0">
                 Unavailable ({{ unavailable|length }})
-                <span class="arrow align-middle float-right"></span>
             </h5>
+            <img src="{% static 'symbols/icons/chevron-up.svg' %}" class="arrow-up" height="20" alt="Hide">
+            <img src="{% static 'symbols/icons/chevron-down.svg' %}" class="arrow-down" height="20" alt="Show">
         </div>
         <div id="collapse-unavailable" class="collapse" aria-labelledby="heading-unavailable">
             <div class="card-body">
