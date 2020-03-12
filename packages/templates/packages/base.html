@@ -47,10 +47,28 @@
                 {% endblock bodyblock %}
             </div>
 
-            <footer class="bg-primary text-center align-middle p-3 mt-auto">
-                <a href="{{ URL_IMPRINT }}" class="text-light" target="_blank">Imprint</a>
-                <span class="p-2 text-light">|</span>
-                <a href="{{ URL_PRIVACY_POLICY }}" class="text-light" target="_blank">Privacy policy</a>
+            <footer class="d-flex flex-wrap justify-content-between bg-primary p-3 mt-auto">
+                <div class="m-1 align-self-center">
+                    <a href="{{ URL_IMPRINT }}" class="text-light" target="_blank">Imprint</a>
+                    <span class="p-2 text-light">|</span>
+                    <a href="{{ URL_PRIVACY_POLICY }}" class="text-light" target="_blank">Privacy policy</a>
+                </div>
+                <div class="m-1 align-self-center">
+                    <div class="text-light">
+                        <img src="{% static 'symbols/icons/code-slash.svg' %}" height="20" alt="Code">
+                        made with
+                        <img src="{% static 'symbols/icons/heart.svg' %}" height="20" alt="Love">
+                        by <a class="text-light" target="_blank" href="https://bit-bots.de/">Hamburg Bit-Bots</a>.
+                    </div>
+                </div>
+                <div class="m-1 align-self-center">
+                    <div class="text-light">
+                        Bootstrap Theme:
+                        <a href="https://bootstrap.themes.guide/herbie/" class="text-light" target="_blank">
+                            Herbie
+                        </a>
+                    </div>
+                </div>
             </footer>
         </div>
 
