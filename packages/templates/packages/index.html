@@ -42,7 +42,7 @@ sudo apt remove ros-melodic-* && sudo apt update</code></pre>
                     <tbody>
                     {% for package in available %}
                     <tr>
-                        <th scope="row" class="align-middle" title="This package is queued for building">
+                        <th scope="row" class="align-middle" title="This package is built and available">
                             <img src="{% static 'symbols/icons/check-circle.svg' %}" height="20" alt="Available">
                             <span class="mx-1">{{ package.name }}</span>
                             <div class="badge badge-pill badge-primary">{{ package.version }}</div>
