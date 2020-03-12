@@ -27,7 +27,7 @@ body {
 
 .collapsable .arrow::after {
     content: "\f107";
-    font-family: "FontAwesome"
+    font-family: "FontAwesome";
 }
 
 .collapsable[aria-expanded="true"] .arrow::after {
