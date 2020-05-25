@@ -61,7 +61,7 @@ py_files=$(grep -rl 'bin/python *$')
 mk-build-deps --install --remove --tool='apt-get -o Debug::pkgProblemResolver=yes --no-install-recommends --yes' debian/control &>/dev/null || exit 1
 
 # Build package
-debuild -us -uc -b &>/dev/null || exit 1
+debuild -e ROS_PYTHON_VERSION=3 -us -uc -b &>/dev/null || exit 1
 
 # Copy built package to /out
 cd ..
