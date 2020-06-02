@@ -8,14 +8,21 @@
             <p class="card-text">
                 Add the packages to your Ubuntu 18.04 by executing the following commands:
                 <div class="bg-primary rounded p-3">
-                    <pre class="mb-0"><code class="text-light"># To add the Bit-Bots signing key:
+                    <pre class="mb-0"><code class="text-light"># Before adding the new packages, remove the old source list
+sudo rm /etc/apt/sources.list.d/ros.list
+# This could also be ros-final.list, ros-latest.list, or somewhere in /etc/apt/sources.list
+
+# Then, remove all previously installed ROS packages
+sudo apt remove "ros-melodic-*"
+
+# Add the Bit-Bots signing key
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4C4EDF893374591687621C75C2F8DBB6A37B2874
 
-# To add the package repository:
+# Add the package repository
 sudo sh -c 'echo "deb {{ LOCAL_URL }} bionic main" &gt; /etc/apt/sources.list.d/ros.list'
 
-# To remove all previously installed ROS Packages:
-sudo apt remove ros-melodic-* && sudo apt update</code></pre>
+# And update your source lists
+sudo apt update</code></pre>
                 </div>
             </p>
         </div>
