@@ -19,7 +19,7 @@ the server. To also build the ROS packages, the following additional packages ha
 * `python3-uwsgi` and `uwsgi-plugin-python3` to deploy the production server with uwsgi
 
 To be able to build packages, the base image has to be built. Navigate into the `docker` directory
-and execute `docker built -t packages-base .`.
+and execute `docker build -t packages-base .`.
 
 Configuration
 -------------
