@@ -19,7 +19,7 @@ sudo apt remove "ros-melodic-*"
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 4C4EDF893374591687621C75C2F8DBB6A37B2874
 
 # Add the package repository
-sudo sh -c 'echo "deb {{ LOCAL_URL }} bionic main" &gt; /etc/apt/sources.list.d/ros.list'
+sudo sh -c 'echo "deb [arch=amd64] {{ LOCAL_URL }} bionic main" &gt; /etc/apt/sources.list.d/ros.list'
 
 # And update your source lists
 sudo apt update</code></pre>
