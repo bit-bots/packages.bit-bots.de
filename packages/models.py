@@ -1,3 +1,4 @@
+import re
 from django.db import models
 
 
@@ -26,6 +27,11 @@ class Package(models.Model):
             return 'https://wiki.ros.org/' + self.name.replace('ros-melodic-', '').replace('-', '_')
         else:
             return None
+
+    @property
+    def version_parsed(self):
+        """An array of ints representing the version"""
+        return [int(item) for item in re.split('[\.-]', self.version)]
 
 
 class Dependency(models.Model):

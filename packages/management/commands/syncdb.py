@@ -21,9 +21,9 @@ class Command(BaseCommand):
                     # Skip package that is only upstream
                     continue
                 # Package in local packages -> Check for upstream version
-                elif upstream_packages[package_name] == local_packages[package_name].version:
+                elif upstream_packages[package_name] == local_packages[package_name].version_parsed:
                     local_packages[package_name].upstream_state = UpstreamState.UP_TO_DATE
-                elif upstream_packages[package_name] <= local_packages[package_name].version:
+                elif upstream_packages[package_name] <= local_packages[package_name].version_parsed:
                     print(f'Package {package_name} newer than upstream package')
                 else:
                     # Update available, put into queue

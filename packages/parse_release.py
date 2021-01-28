@@ -1,3 +1,4 @@
+import re
 import requests
 
 
@@ -16,5 +17,8 @@ def parse_release_file(base_url: str) -> dict:
         elif line.startswith('Version'):
             # ROS upstream uses different format (e.g. 1.12.7-0bionic.20191211.002449 instead of 1.12.7-0
             version_line = line.split(':', 1)[1].strip()
-            packages[current_package] = version_line.split('bionic', 1)[0]
+            version_match = re.match(r'^\d+\.\d+(\.\d+)?(-\d+)?', version_line)
+            if not version_match: print(version_line)
+            # To make versions comparable, save them as a list of ints
+            packages[current_package] = [int(item) for item in re.split('[\.-]', version_match.group(0))]
     return {p: v for p, v in packages.items() if p.startswith('python3-') or p.startswith('ros-melodic-')}

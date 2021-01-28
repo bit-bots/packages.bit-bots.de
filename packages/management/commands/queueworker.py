@@ -75,7 +75,9 @@ class Command(BaseCommand):
                     # Deploy was successful, reset package state and update version
                     package.local_state = LocalState.UP_TO_DATE
                     package.upstream_state = UpstreamState.UP_TO_DATE
-                    package.version = parse_release_file(settings.LOCAL_URL)[package.name]
+                    version_parsed = parse_release_file(settings.LOCAL_URL)[package.name]
+                    version_string = '.'.join(str(item) for item in version_parsed[:-1]) + '-' + str(version_parsed[-1])
+                    package.version = version_string
                     package.save()
                     queue.remove(package.id)
                     print(f'Successfully deployed package {package.name}')
