@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "<3.1"
+django = "<3.2"
 fasteners = "<0.16"
 requests = "<2.23"
 
